@@ -1,5 +1,3 @@
-
-sathish babu  3:08 PM
 pipeline {
     agent {
         label 'windows'
