@@ -1,17 +1,21 @@
 pipeline {
     agent any
-    triggers {
-        pollSCM("*/2 * * * *")
-    }
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "MVN3"
         jdk "JDK1.8"
     }
     stages {
+        stage("Enable webhook") {
+            steps {
+                script {
+                    properties([pipelineTriggers([githubPush()])])
+                }
+            }
+        }
         stage('pullscm') {
             steps {
-                git credentialsId: 'github', url: 'git@github.com:mohanboyapati/jenkins_test.git'
+                git credentialsId: 'github', url: 'git@github.com:sathishbob/jenkins_test.git'
             }
         }
         stage('Build') {
@@ -47,12 +51,3 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
-
-
-
